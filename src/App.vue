@@ -8,6 +8,7 @@
 	import Header from "@/components/Header.vue";
 	import Hero from "@/components/Hero.vue";
 	import TaskView from "@/components/TaskView.vue";
+	import FormTask from "@/components/FormTask.vue";
 
 	// Variable reactiva para almacenar las tareas
 	const tasksList = ref([]);
@@ -24,6 +25,8 @@
 		<Header />
 		<!-- Hero Section -->
 		<Hero />
+		<!-- Form Task Section (Temporal hasta que aplique las rutas)-->
+		<FormTask />
 		<!-- Task View Section (Temporal hasta que aplique las rutas)-->
 		<TaskView :tasksList="tasksList" />
 	</div>
