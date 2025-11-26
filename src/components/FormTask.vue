@@ -4,7 +4,6 @@
 		title: String,
 		priority: String,
 		estimatedPomodoros: String,
-		completed: Boolean,
 	});
 
 	// Emits para v-model
@@ -12,8 +11,8 @@
 		"update:title",
 		"update:priority",
 		"update:estimatedPomodoros",
-		"update:completed",
 		"submit",
+		"error",
 	]);
 	// Función para manejar el envío del formulario
 	const handleSubmit = () => {
@@ -28,7 +27,7 @@
 			emit("update:priority", "");
 			emit("update:estimatedPomodoros", "");
 		} else {
-			alert("No puedes agregar una tarea sin título.");
+			emit("error", "El título de la tarea es obligatorio.");
 		}
 	};
 </script>

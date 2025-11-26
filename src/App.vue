@@ -56,18 +56,31 @@
 			estimatedPomodoros: taskData.estimatedPomodoros,
 			completed: taskData.completed,
 		});
-		// console.log("Tarea agregada. Lista actualizada:", tasksList.value);
+		handleSuccessMessage("Tarea agregada correctamente.");
+	};
+
+	const handleSuccessMessage = (successMessage) => {
+		messageType.value = "success";
+		messageText.value = successMessage;
+		showMessage.value = true;
+		setTimeout(() => {
+			clearMessage();
+		}, 3000);
+	};
+
+	const handleErrorMessage = (errorMessage) => {
+		messageType.value = "error";
+		messageText.value = errorMessage;
+		showMessage.value = true;
+		setTimeout(() => {
+			clearMessage();
+		}, 3000);
 	};
 
 	const deleteTask = (taskId) => {
 		// console.log("Eliminar tarea con ID:", taskId);
 		tasksList.value = tasksList.value.filter((task) => task.id !== taskId);
-		messageType.value = "success";
-		messageText.value = "Tarea eliminada correctamente.";
-		showMessage.value = true;
-		setTimeout(() => {
-			clearMessage();
-		}, 3000);
+		handleSuccessMessage("Tarea eliminada correctamente.");
 	};
 
 	const clearMessage = () => {
@@ -93,6 +106,7 @@
 			v-model:estimatedPomodoros="estimatedPomodoros"
 			v-model:completed="completed"
 			@submit="handleNewTask"
+			@error="handleErrorMessage"
 		/>
 		<!-- Message Component -->
 		<Message v-if="showMessage" :type="messageType">
