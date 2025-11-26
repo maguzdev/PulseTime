@@ -1,10 +1,14 @@
 <script setup>
+import { inject } from 'vue';
+
 	defineProps({
 		task: {
 			type: Object,
 			required: true,
 		},
 	});
+
+	const deleteTask = inject('deleteTask');
 </script>
 
 <template>
@@ -54,6 +58,7 @@
 
 				<!-- Botón eliminar -->
 				<button
+					@click="deleteTask(task.id)"
 					class="bg-linear-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-red-500/30 hover:scale-105 cursor-pointer"
 					title="Eliminar tarea"
 				>

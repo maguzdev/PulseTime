@@ -1,5 +1,5 @@
 <script setup>
-	import { ref, onMounted, watch } from "vue";
+	import { ref, onMounted, watch, provide } from "vue";
 
 	// Importación de datos de tareas temporales
 	import { tasks } from "@/data/tasks.js";
@@ -53,6 +53,14 @@
 		});
 		console.log("Tarea agregada. Lista actualizada:", tasksList.value);
 	};
+
+	const deleteTask = (taskId) => {
+		console.log("Eliminar tarea con ID:", taskId);
+		tasksList.value = tasksList.value.filter((task) => task.id !== taskId);
+	};
+	
+	// Proveer la función deleteTask a todos los componentes descendientes
+	provide('deleteTask', deleteTask);
 </script>
 
 <template>
