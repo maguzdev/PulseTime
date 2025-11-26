@@ -5,10 +5,10 @@
 
 <template>
 	<header
-		class="bg-white h-24 flex bg-linear-to-r from-violet-400 via-violet-400 to-indigo-400 to-100% items-center border-b-8 border-violet-200"
+		class="bg-white flex bg-linear-to-r from-violet-400 via-violet-400 to-indigo-400 to-100% items-center border-b-8 border-violet-200 py-4"
 	>
 		<div
-			class="flex flex-col md:flex-row justify-between items-center w-full px-6 gap-1"
+			class="flex flex-col md:flex-row justify-between items-center w-full px-6 gap-4"
 		>
 			<!-- Logo -->
 			<a href="/"><LogoBrand /></a>
