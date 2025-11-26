@@ -1,7 +1,7 @@
 <template>
 	<section>
 		<div
-			class="bg-white flex flex-col h-80 shadow-lg justify-center items-center text-center"
+			class="bg-white flex flex-col h-80 shadow-lg justify-center items-center text-center px-4"
 		>
 			<h1
 				class="text-5xl font-bold bg-linear-to-r from-violet-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent mb-4"

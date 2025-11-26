@@ -14,7 +14,7 @@
 
 <template>
 	<div
-		class="flex items-center bg-white rounded-xl shadow-lg p-6 max-w-md md:max-w-2xl w-full md:mx-auto mx-4 space-x-3 flex-1 hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 ease-in-out hover:shadow-1xl hover:shadow-violet-500/20 hover:border-violet-500/50"
+		class="flex items-center bg-white rounded-xl shadow-lg p-6 max-w-xl w-full mx-4 space-x-3 flex-1 hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 ease-in-out hover:shadow-1xl hover:shadow-violet-500/20 hover:border-violet-500/50"
 	>
 		<!-- Botón para marcar como completada -->
 		<button
