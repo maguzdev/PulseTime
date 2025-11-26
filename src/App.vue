@@ -1,6 +1,6 @@
 <script setup>
-	import { ref, onMounted } from "vue";
-	
+	import { ref, onMounted, watch } from "vue";
+
 	// Importación de datos de tareas temporales
 	import { tasks } from "@/data/tasks.js";
 
@@ -18,11 +18,29 @@
 	const estimatedPomodoros = ref("");
 	const completed = ref(false);
 
+	// Watcher para guardar tareas en localStorage cuando cambien
+	watch(
+		tasksList,
+		() => {
+			saveTasksToLocalStorage();
+		},
+		{ deep: true }
+	);
+
+	// Guardar tareas en localStorage
+	const saveTasksToLocalStorage = () => {
+		localStorage.setItem("tasks", JSON.stringify(tasksList.value));
+	};
 
 	// Simulación de carga de datos
 	onMounted(() => {
 		tasksList.value = tasks;
-	})
+		// Cargar tareas desde localStorage si existen
+		const savedTasks = localStorage.getItem("tasks");
+		if (savedTasks) {
+			tasksList.value = JSON.parse(savedTasks);
+		}
+	});
 
 	// Función para recibir la nueva tarea del formulario
 	const handleNewTask = (taskData) => {
@@ -33,7 +51,7 @@
 			estimatedPomodoros: taskData.estimatedPomodoros,
 			completed: taskData.completed,
 		});
-		console.log('Tarea agregada. Lista actualizada:', tasksList.value);
+		console.log("Tarea agregada. Lista actualizada:", tasksList.value);
 	};
 </script>
 
@@ -44,8 +62,8 @@
 		<!-- Hero Section -->
 		<Hero />
 		<!-- Form Task Section (Temporal hasta que aplique las rutas)-->
-		<FormTask 
-			v-model:title="title" 
+		<FormTask
+			v-model:title="title"
 			v-model:priority="priority"
 			v-model:estimatedPomodoros="estimatedPomodoros"
 			v-model:completed="completed"
