@@ -17,6 +17,7 @@
 		<h3 class="text-4xl font-semibold mb-4 text-gray-800">
 			Lista de Tareas
 		</h3>
-		<TaskCard v-for="task in tasksList" :key="task.id" :task="task" />
+		<p v-if="tasksList.length === 0">No hay tareas disponibles.</p>
+		<TaskCard v-else v-for="task in tasksList" :key="task.id" :task="task" />
 	</section>
 </template>

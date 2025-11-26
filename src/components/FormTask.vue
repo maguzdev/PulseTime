@@ -1,23 +1,78 @@
+<script setup>
+	// Props para v-model
+	const props = defineProps({
+		title: String,
+		priority: String,
+		estimatedPomodoros: String,
+		completed: Boolean,
+	});
+
+	// Emits para v-model
+	const emit = defineEmits([
+		"update:title",
+		"update:priority",
+		"update:estimatedPomodoros",
+		"update:completed",
+		"submit",
+	]);
+	// Función para manejar el envío del formulario
+	const handleSubmit = () => {
+		if (props.title) {
+			emit("submit", {
+				title: props.title,
+				priority: props.priority,
+				estimatedPomodoros: props.estimatedPomodoros,
+			});
+			// Limpiar los campos después de enviar
+			emit("update:title", "");
+			emit("update:priority", "baja");
+			emit("update:estimatedPomodoros", "");
+		} else {
+			alert("No puedes agregar una tarea sin título.");
+		}
+	};
+</script>
+
 <template>
 	<section class="mt-8 p-6 bg-white rounded-2xl shadow-md max-w-2xl mx-auto">
 		<h2 class="text-2xl font-semibold mb-6 text-gray-800 text-center">
 			✨ Agregar Nueva Tarea
 		</h2>
-		<form @submit.prevent="" class="flex flex-col gap-4 max-w-md mx-auto">
+		<form
+			@submit.prevent="handleSubmit"
+			class="flex flex-col gap-4 max-w-md mx-auto"
+		>
+			<!-- Title -->
 			<input
 				type="text"
+				:value="title"
+				@input="emit('update:title', $event.target.value)"
 				placeholder="Título de la tarea"
 				class="bg-white border border-violet-500/30 hover:border-violet-500/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-500/30 p-4 rounded-xl text-gray-800 placeholder-gray-400 transition-all duration-200 outline-none"
 			/>
+
+			<!-- Priority -->
 			<select
+				:value="priority"
+				@change="emit('update:priority', $event.target.value)"
 				class="bg-white border border-violet-500/30 hover:border-violet-500/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-500/30 p-4 rounded-xl text-gray-800 transition-all duration-200 outline-none"
 			>
-				<option value="" disabled selected>Seleccionar proyecto</option>
-				<option value="proyecto1">Marketing</option>
-				<option value="proyecto2">Desarrollo</option>
-				<option value="proyecto3">Ventas</option>
-				<option value="proyecto4">PulseTime</option>
+				<option value="baja">Baja</option>
+				<option value="media">Media</option>
+				<option value="alta">Alta</option>
 			</select>
+
+			<!-- Estimated Pomodoros -->
+			<input
+				type="number"
+				min="1"
+				:value="estimatedPomodoros"
+				@input="emit('update:estimatedPomodoros', $event.target.value)"
+				placeholder="Pomodoros estimados"
+				class="bg-white border border-violet-500/30 hover:border-violet-500/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-500/30 p-4 rounded-xl text-gray-800 placeholder-gray-400 transition-all duration-200 outline-none"
+			/>
+
+			<!-- Submit Button -->
 			<button
 				class="bg-linear-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white p-4 rounded-xl transition-all duration-200 font-semibold shadow-lg hover:shadow-violet-500/30 hover:scale-105 active:scale-95 transform cursor-pointer"
 			>
