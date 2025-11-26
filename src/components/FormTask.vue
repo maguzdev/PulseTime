@@ -4,6 +4,7 @@
 		title: String,
 		priority: String,
 		estimatedPomodoros: String,
+		completed: Boolean,
 	});
 
 	// Emits para v-model
@@ -11,6 +12,7 @@
 		"update:title",
 		"update:priority",
 		"update:estimatedPomodoros",
+		"update:completed",
 		"submit",
 		"error",
 	]);
