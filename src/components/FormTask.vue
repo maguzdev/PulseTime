@@ -25,7 +25,7 @@
 			});
 			// Limpiar los campos después de enviar
 			emit("update:title", "");
-			emit("update:priority", "baja");
+			emit("update:priority", "");
 			emit("update:estimatedPomodoros", "");
 		} else {
 			alert("No puedes agregar una tarea sin título.");
@@ -57,6 +57,7 @@
 				@change="emit('update:priority', $event.target.value)"
 				class="bg-white border border-violet-500/30 hover:border-violet-500/50 focus:border-violet-400 focus:ring-2 focus:ring-violet-500/30 p-4 rounded-xl text-gray-800 transition-all duration-200 outline-none"
 			>
+				<option value="" disabled selected>Selecciona prioridad</option>
 				<option value="baja">Baja</option>
 				<option value="media">Media</option>
 				<option value="alta">Alta</option>

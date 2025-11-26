@@ -14,7 +14,7 @@
 	const tasksList = ref([]);
 	// Variables para el formulario de nueva tarea
 	const title = ref("");
-	const priority = ref("baja");
+	const priority = ref("");
 	const estimatedPomodoros = ref("");
 	const completed = ref(false);
 
@@ -29,11 +29,11 @@
 		tasksList.value.push({
 			id: Math.random().toString(36).substr(2, 9),
 			title: taskData.title,
-			priority: taskData.priority,
+			priority: taskData.priority || "baja",
 			estimatedPomodoros: taskData.estimatedPomodoros,
 			completed: taskData.completed,
 		});
-		// console.log('Tarea agregada. Lista actualizada:', tasksList.value);
+		console.log('Tarea agregada. Lista actualizada:', tasksList.value);
 	};
 </script>
 
