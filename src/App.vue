@@ -9,6 +9,7 @@
 	import Hero from "@/components/Hero.vue";
 	import TaskView from "@/components/TaskView.vue";
 	import FormTask from "@/components/FormTask.vue";
+	import Message from "@/components/ui/Message.vue";
 
 	// Variable reactiva para almacenar las tareas
 	const tasksList = ref([]);
@@ -17,6 +18,10 @@
 	const priority = ref("");
 	const estimatedPomodoros = ref("");
 	const completed = ref(false);
+	// Variables para el mensaje
+	const showMessage = ref(false);
+	const messageType = ref("");
+	const messageText = ref("");
 
 	// Watcher para guardar tareas en localStorage cuando cambien
 	watch(
@@ -51,16 +56,28 @@
 			estimatedPomodoros: taskData.estimatedPomodoros,
 			completed: taskData.completed,
 		});
-		console.log("Tarea agregada. Lista actualizada:", tasksList.value);
+		// console.log("Tarea agregada. Lista actualizada:", tasksList.value);
 	};
 
 	const deleteTask = (taskId) => {
-		console.log("Eliminar tarea con ID:", taskId);
+		// console.log("Eliminar tarea con ID:", taskId);
 		tasksList.value = tasksList.value.filter((task) => task.id !== taskId);
+		messageType.value = "success";
+		messageText.value = "Tarea eliminada correctamente.";
+		showMessage.value = true;
+		setTimeout(() => {
+			clearMessage();
+		}, 3000);
 	};
-	
+
+	const clearMessage = () => {
+		messageText.value = "";
+		messageType.value = "";
+		showMessage.value = false;
+	};
+
 	// Proveer la función deleteTask a todos los componentes descendientes
-	provide('deleteTask', deleteTask);
+	provide("deleteTask", deleteTask);
 </script>
 
 <template>
@@ -77,6 +94,10 @@
 			v-model:completed="completed"
 			@submit="handleNewTask"
 		/>
+		<!-- Message Component -->
+		<Message v-if="showMessage" :type="messageType">
+			{{ messageText }}
+		</Message>
 		<!-- Task View Section (Temporal hasta que aplique las rutas)-->
 		<TaskView :tasksList="tasksList" />
 	</div>
