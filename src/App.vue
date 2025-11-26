@@ -83,6 +83,13 @@
 		handleSuccessMessage("Tarea eliminada correctamente.");
 	};
 
+	const toggleTaskCompletion = (taskId) => {
+		const task = tasksList.value.find((task) => task.id === taskId);
+		if (task) {
+			task.completed = !task.completed;
+		}
+	};
+
 	const clearMessage = () => {
 		messageText.value = "";
 		messageType.value = "";
@@ -91,6 +98,7 @@
 
 	// Proveer la función deleteTask a todos los componentes descendientes
 	provide("deleteTask", deleteTask);
+	provide("toggleTaskCompletion", toggleTaskCompletion);
 </script>
 
 <template>

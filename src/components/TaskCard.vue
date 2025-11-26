@@ -9,6 +9,7 @@ import { inject } from 'vue';
 	});
 
 	const deleteTask = inject('deleteTask');
+	const toggleTaskCompletion = inject('toggleTaskCompletion');
 </script>
 
 <template>
@@ -28,6 +29,7 @@ import { inject } from 'vue';
 					? 'Marcar como pendiente'
 					: 'Marcar como completada'
 			"
+			@click="toggleTaskCompletion(task.id)"
 		>
 			<span v-if="task.completed" class="text-xs font-bold">✓</span>
 		</button>
