@@ -13,6 +13,8 @@
 
 	// Variable reactiva para almacenar las tareas
 	const tasksList = ref([]);
+	const pendingTasks = ref([]);
+	const completedTasks = ref([]);
 	// Variables para el formulario de nueva tarea
 	const title = ref("");
 	const priority = ref("");
@@ -28,6 +30,16 @@
 		tasksList,
 		() => {
 			saveTasksToLocalStorage();
+		},
+		{ deep: true }
+	);
+
+	watch(
+		tasksList,
+		() => {
+			filterCompletedTasks();
+			filterPendingTasks();
+			// console.log("Tareas completadas:", completedTasks.value);
 		},
 		{ deep: true }
 	);
@@ -96,6 +108,14 @@
 		showMessage.value = false;
 	};
 
+	const filterCompletedTasks = () => {
+		completedTasks.value = tasksList.value.filter((task) => task.completed);
+	};
+
+	const filterPendingTasks = () => {
+		pendingTasks.value = tasksList.value.filter((task) => !task.completed);
+	};
+
 	// Proveer la función deleteTask a todos los componentes descendientes
 	provide("deleteTask", deleteTask);
 	provide("toggleTaskCompletion", toggleTaskCompletion);
@@ -121,7 +141,10 @@
 			{{ messageText }}
 		</Message>
 		<!-- Task View Section (Temporal hasta que aplique las rutas)-->
-		<TaskView :tasksList="tasksList" />
+		<TaskView
+			:pendingTasks="pendingTasks"
+			:completedTasks="completedTasks"
+		/>
 	</div>
 </template>
 
