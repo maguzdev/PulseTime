@@ -1,5 +1,6 @@
 <script setup>
-	import { inject } from "vue";
+	import { inject, ref } from "vue";
+	import ConfirmModal from "./ConfirmModal.vue";
 
 	defineProps({
 		task: {
@@ -8,11 +9,37 @@
 		},
 	});
 
+	const showDeleteConfirm = ref(false);
+	const taskToDelete = ref(null);
+
+	const confirmDelete = (taskId) => {
+		taskToDelete.value = taskId;
+		showDeleteConfirm.value = true;
+	};
+
+	const handleDelete = () => {
+		if (taskToDelete.value) {
+			deleteTask(taskToDelete.value);
+			showDeleteConfirm.value = false;
+			taskToDelete.value = null;
+		}
+	};
+
 	const deleteTask = inject("deleteTask");
 	const toggleTaskCompletion = inject("toggleTaskCompletion");
 </script>
 
 <template>
+	<!-- Modal de confirmación -->
+	<ConfirmModal
+		v-if="showDeleteConfirm"
+		title="Eliminar Tarea"
+		message="¿Estás seguro de que deseas eliminar esta tarea?"
+		confirm-text="Eliminar"
+		cancel-text="Cancelar"
+		@close="showDeleteConfirm = false"
+		@confirm="handleDelete"
+	/>
 	<div
 		class="flex items-center bg-white rounded-xl shadow-lg p-6 max-w-xl w-full mx-4 space-x-3 flex-1 hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 ease-in-out hover:shadow-1xl hover:shadow-violet-500/20 hover:border-violet-500/50"
 	>
@@ -73,12 +100,20 @@
 					viewBox="0 0 24 24"
 				>
 					<!-- Círculo exterior del timer -->
-					<circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.2"/>
-					<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+					<circle
+						cx="12"
+						cy="12"
+						r="10"
+						fill="currentColor"
+						opacity="0.2"
+					/>
+					<path
+						d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+					/>
 					<!-- Manecilla del reloj apuntando a las 12 -->
-					<path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+					<path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
 					<!-- Botón superior del cronómetro -->
-					<path d="M10 1h4v2h-4z"/>
+					<path d="M10 1h4v2h-4z" />
 				</svg>
 			</div>
 		</div>
@@ -104,8 +139,8 @@
 
 			<!-- Botón eliminar -->
 			<button
-				@click="deleteTask(task.id)"
-				class="bg-linear-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-red-500/30 hover:scale-105 cursor-pointer"
+				@click="confirmDelete(task.id)"
+				class="bg-linear-to-r from-rose-500 to-red-500 hover:from-rose-600 hover:to-red-600 text-white p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-red-500/30 hover:scale-105 cursor-pointer"
 				title="Eliminar tarea"
 			>
 				<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
