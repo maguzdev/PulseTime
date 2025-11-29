@@ -99,6 +99,11 @@
 		const task = tasksList.value.find((task) => task.id === taskId);
 		if (task) {
 			task.completed = !task.completed;
+			handleSuccessMessage(
+				task.completed
+					? "Tarea marcada como completada."
+					: "Tarea marcada como pendiente."
+			);
 		}
 	};
 

@@ -30,6 +30,9 @@
 </script>
 
 <template>
+	<Message v-if="task.completed" type="success" class="mb-4">
+		¡Tarea completada!
+	</Message>
 	<!-- Modal de confirmación -->
 	<ConfirmModal
 		v-if="showDeleteConfirm"
